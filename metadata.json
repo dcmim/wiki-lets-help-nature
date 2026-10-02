@@ -1,0 +1,6 @@
+{
+  "name": "EarthCraft - Learn How to Help Nature",
+  "description": "An interactive educational guide to healing ecosystems, restoring biodiversity, and adopting practical daily environmental actions with audio, video, graphics, and interactive animations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

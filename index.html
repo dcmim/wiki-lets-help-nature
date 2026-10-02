@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Let's Help Our Nature Clean And Green</title>
+    <meta name="description" content="An interactive educational guide to healing ecosystems, restoring biodiversity, and adopting practical daily environmental actions with audio, video, graphics, and interactive animations." />
+    <meta property="og:title" content="Let's Help Our Nature Clean And Green" />
+    <meta property="og:description" content="An interactive educational guide to healing ecosystems, restoring biodiversity, and adopting practical daily environmental actions with audio, video, graphics, and interactive animations." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts for High-Character Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/src/index.css" />
+    <style>
+      body {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: #1e293b;
+        background-color: #f4f7f4;
+      }
+      .font-display {
+        font-family: 'Fraunces', Georgia, serif;
+      }
+    </style>
+  </head>
+  <body class="w-full h-full m-0 p-0 overflow-hidden bg-[#f4f7f4] text-slate-800 selection:bg-emerald-200 selection:text-emerald-950">
+    <!-- APP STAGE: Host container for responsive landscape presentation -->
+    <div id="app-stage" class="app-stage">
+      <!-- Ambient Floating Leaves Canvas Background -->
+      <canvas id="ambient-leaf-canvas" class="absolute inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+      <!-- Floating Rotated Landscape HUD (visible when in 90° rotated landscape) -->
+      <div id="rotated-landscape-controls" class="hidden items-center gap-2 bg-slate-900 text-white px-3 py-1.5 rounded-full border border-slate-700 shadow-xl">
+        <button data-slide-prev class="p-1 hover:text-emerald-400 transition-colors cursor-pointer" title="Previous Slide (Q)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <span id="rotated-counter" class="text-xs font-mono font-bold px-1.5 text-emerald-300">1 / 8</span>
+        <button data-slide-next class="p-1 hover:text-emerald-400 transition-colors cursor-pointer" title="Next Slide (E)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <span class="w-px h-3.5 bg-slate-700"></span>
+        <button id="exit-rotated-btn" class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-200 text-xs font-medium hover:bg-slate-700 transition-colors cursor-pointer">
+          Exit Landscape
+        </button>
+      </div>
+
+      <!-- Top Navigation Header (Clean, 1-Row Top Bar Contract) -->
+      <header class="relative z-50 bg-white border-b border-slate-200/90 px-4 sm:px-6 py-2.5 transition-all shrink-0">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+          <!-- Zone 1: Wordmark -->
+          <a href="#" class="font-display text-base sm:text-lg lg:text-xl font-bold tracking-tight text-slate-900 shrink-0">
+            Let's Help Our Nature Clean And Green
+          </a>
+
+          <!-- Zone 2: Slide Navigation & Tabs -->
+          <div class="flex items-center gap-2">
+            <!-- Compact Switcher -->
+            <div class="flex items-center gap-1 bg-slate-100/90 rounded-lg p-1 border border-slate-200/60">
+              <button data-slide-prev class="px-2 py-1 text-xs font-semibold text-slate-700 hover:text-slate-900 rounded transition-colors cursor-pointer" title="Previous (Q)">
+                ← Prev
+              </button>
+              <div class="flex items-center px-2 text-xs">
+                <span id="slide-counter-display" class="font-mono font-bold text-slate-900 tabular-nums">1 / 8</span>
+                <span id="slide-mode-badge" class="hidden"></span>
+              </div>
+              <button data-slide-next class="px-2 py-1 text-xs font-semibold text-slate-700 hover:text-slate-900 rounded transition-colors cursor-pointer" title="Next (E)">
+                Next →
+              </button>
+            </div>
+
+            <!-- Clean Text Nav Tabs for Desktop -->
+            <nav class="hidden 2xl:flex items-center gap-1 text-xs pl-2 border-l border-slate-200">
+              <button data-slide-tab="0" class="px-2.5 py-1 text-xs font-semibold rounded-md transition-colors bg-emerald-900 text-white cursor-pointer">Overview</button>
+              <button data-slide-tab="1" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors text-slate-600 hover:text-slate-900 cursor-pointer">Lab</button>
+              <button data-slide-tab="2" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors text-slate-600 hover:text-slate-900 cursor-pointer">Canopies</button>
+              <button data-slide-tab="3" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors text-slate-600 hover:text-slate-900 cursor-pointer">Videos</button>
+              <button data-slide-tab="4" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors text-slate-600 hover:text-slate-900 cursor-pointer">Soil</button>
+              <button data-slide-tab="5" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors text-slate-600 hover:text-slate-900 cursor-pointer">Impact</button>
+              <button data-slide-tab="6" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors text-slate-600 hover:text-slate-900 cursor-pointer">Action</button>
+              <button data-slide-tab="7" class="px-2.5 py-1 text-xs font-medium rounded-md transition-colors text-slate-600 hover:text-slate-900 cursor-pointer">Sources</button>
+            </nav>
+          </div>
+
+          <!-- Zone 3: Simple Functional Utilities -->
+          <div class="flex items-center gap-2 shrink-0">
+            <button id="fullscreen-rotate-btn" class="px-3 py-1.5 text-xs font-medium text-slate-800 bg-white hover:bg-slate-100 border border-slate-300 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap" title="Toggle Fullscreen Landscape">
+              <svg id="fullscreen-btn-icon" class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+              <span id="fullscreen-btn-label">Fullscreen</span>
+            </button>
+            
+            <button id="master-audio-toggle" class="px-3 py-1.5 text-xs font-medium text-slate-800 bg-white hover:bg-slate-100 border border-slate-300 rounded-lg transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
+              <svg class="w-3.5 h-3.5 text-slate-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+              <span class="audio-label hidden sm:inline">Sound</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Minimal 2px Slide Progress Line -->
+      <div class="w-full bg-slate-200/60 h-[2px] relative z-20">
+        <div id="slide-progress-bar" class="slide-progress-bar w-[12.5%] h-full"></div>
+      </div>
+
+    <!-- SLIDES VIEWPORT CONTAINER -->
+    <main id="slides-viewport" class="slides-viewport relative z-10 w-full overflow-hidden bg-[#f8faf8]">
+      <div id="slides-track" class="slides-track bg-[#f8faf8]">
+        
+        <!-- ============================================== -->
+        <!-- SLIDE 1: WELCOME & CORE REWILDING ETHOS (READ) -->
+        <!-- ============================================== -->
+        <article class="slide-item active-slide px-4 sm:px-8 py-4 sm:py-6 bg-[#f8faf8]">
+          <div class="max-w-6xl mx-auto w-full slide-content-landscape my-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 sm:gap-10 items-center">
+              <div class="sm:col-span-7 space-y-4">
+                <p class="text-xs font-bold text-emerald-800 uppercase tracking-widest">
+                  01 · Rewilding Ethos
+                </p>
+                
+                <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 leading-[1.1]" style="text-wrap: balance;">
+                  Heal nature from your doorstep.
+                </h1>
+
+                <p class="text-base sm:text-lg text-slate-700 leading-relaxed max-w-xl">
+                  80% of biodiversity healing starts at home.
+                </p>
+
+                <!-- 3 Concise Proof Metrics -->
+                <div class="grid grid-cols-3 gap-3 pt-2">
+                  <div class="p-3.5 rounded-xl bg-white border border-slate-200 text-center">
+                    <div class="font-bold text-slate-900 text-2xl sm:text-3xl tabular-nums">500+</div>
+                    <div class="text-xs text-slate-600 mt-1">Species on 1 oak</div>
+                  </div>
+                  <div class="p-3.5 rounded-xl bg-white border border-slate-200 text-center">
+                    <div class="font-bold text-slate-900 text-2xl sm:text-3xl tabular-nums">30×</div>
+                    <div class="text-xs text-slate-600 mt-1">Rain absorption</div>
+                  </div>
+                  <div class="p-3.5 rounded-xl bg-white border border-slate-200 text-center">
+                    <div class="font-bold text-slate-900 text-2xl sm:text-3xl tabular-nums">Zero</div>
+                    <div class="text-xs text-slate-600 mt-1">Runoff toxins</div>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 pt-3">
+                  <button data-slide-next class="px-5 py-2.5 text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition-colors cursor-pointer">
+                    Explore Lab →
+                  </button>
+
+                  <button id="hero-ambient-audio-btn" class="px-4 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 rounded-lg transition-colors flex items-center gap-2 cursor-pointer">
+                    <svg class="w-4 h-4 text-emerald-800" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+                    <span class="audio-label">Nature Sound</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Nature Sample Poster Card -->
+              <div class="sm:col-span-5">
+                <div class="rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-white cursor-pointer group" id="sample-image-trigger" title="Click to view sample image full size">
+                  <div class="relative aspect-16/10 overflow-hidden bg-slate-900">
+                    <img 
+                      src="/src/assets/images/nature_sample_quote_1790926845661.jpg" 
+                      alt="Sample: Love the Nature and Be One with the Nature, Let's Respect the Nature" 
+                      class="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
+                      referrerpolicy="no-referrer"
+                    />
+                  </div>
+                  <div class="p-3 text-center">
+                    <p class="text-xs sm:text-sm font-semibold text-slate-800 italic">
+                      “Love and respect nature”
+                    </p>
+                    <p class="text-[11px] text-slate-500 mt-0.5">Click to enlarge</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================================================= -->
+        <!-- SLIDE 2: LIVING RESTORATION LAB (INTERACTIVE SIMULATION) -->
+        <!-- ======================================================= -->
+        <article class="slide-item px-4 sm:px-8 py-4 sm:py-5 bg-[#f8faf8]">
+          <div class="max-w-6xl mx-auto w-full slide-content-landscape my-auto space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+              <div>
+                <p class="text-xs font-bold text-emerald-800 uppercase tracking-widest">
+                  02 · Interactive Lab
+                </p>
+                <h2 class="font-display text-2xl sm:text-4xl font-bold text-slate-900 mt-1">
+                  Living Ecosystem Lab
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base font-normal max-w-xl">
+                  Toggle interventions to restore the ecosystem.
+                </p>
+              </div>
+
+              <!-- Scorecard -->
+              <div class="flex items-center gap-4 bg-white border border-slate-200 rounded-xl p-3 shadow-2xs shrink-0">
+                <div>
+                  <div class="text-xs text-slate-500 font-medium">Vitality</div>
+                  <div id="sim-health-score" class="text-2xl font-bold text-slate-900 tabular-nums">40%</div>
+                </div>
+                <div class="h-8 w-px bg-slate-200"></div>
+                <div>
+                  <div class="text-xs text-slate-500 font-medium">Biodiversity</div>
+                  <div id="sim-wildlife-count" class="text-base font-bold text-slate-900 tabular-nums">12 Species</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Canvas Element -->
+            <div class="relative rounded-xl overflow-hidden border border-slate-300 bg-slate-950">
+              <canvas id="habitat-canvas" class="w-full h-[220px] sm:h-[280px] lg:h-[340px] block cursor-crosshair"></canvas>
+            </div>
+
+            <!-- 5 Action Buttons -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+              <button data-sim-action="trees" class="p-3 text-xs sm:text-sm font-semibold rounded-lg border transition-all text-left bg-emerald-900 text-white border-emerald-900 shadow-2xs flex flex-col justify-between min-h-[64px] cursor-pointer">
+                <span class="text-xs font-mono opacity-80">01</span>
+                <div>
+                  <div class="font-bold">Plant Trees</div>
+                  <div class="opacity-80 text-xs font-normal truncate">Oak & Pine</div>
+                </div>
+              </button>
+
+              <button data-sim-action="river" class="p-3 text-xs sm:text-sm font-semibold rounded-lg border transition-all text-left bg-white text-slate-800 border-slate-300 shadow-2xs hover:border-slate-500 flex flex-col justify-between min-h-[64px] cursor-pointer">
+                <span class="text-xs font-mono text-slate-500">02</span>
+                <div>
+                  <div class="font-bold">Clean River</div>
+                  <div class="text-slate-500 text-xs font-normal truncate">Filter Runoff</div>
+                </div>
+              </button>
+
+              <button data-sim-action="flowers" class="p-3 text-xs sm:text-sm font-semibold rounded-lg border transition-all text-left bg-emerald-900 text-white border-emerald-900 shadow-2xs flex flex-col justify-between min-h-[64px] cursor-pointer">
+                <span class="text-xs font-mono opacity-80">03</span>
+                <div>
+                  <div class="font-bold">Pollinators</div>
+                  <div class="opacity-80 text-xs font-normal truncate">Meadow</div>
+                </div>
+              </button>
+
+              <button data-sim-action="wildlife" class="p-3 text-xs sm:text-sm font-semibold rounded-lg border transition-all text-left bg-white text-slate-800 border-slate-300 shadow-2xs hover:border-slate-500 flex flex-col justify-between min-h-[64px] cursor-pointer">
+                <span class="text-xs font-mono text-slate-500">04</span>
+                <div>
+                  <div class="font-bold">Fauna Return</div>
+                  <div class="text-slate-500 text-xs font-normal truncate">Fauna</div>
+                </div>
+              </button>
+
+              <button data-sim-action="energy" class="p-3 text-xs sm:text-sm font-semibold rounded-lg border transition-all text-left bg-white text-slate-800 border-slate-300 shadow-2xs hover:border-slate-500 flex flex-col justify-between min-h-[64px] col-span-2 sm:col-span-1 cursor-pointer">
+                <span class="text-xs font-mono text-slate-500">05</span>
+                <div>
+                  <div class="font-bold">Clean Air</div>
+                  <div class="text-slate-500 text-xs font-normal truncate">Fresh Air</div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================================================== -->
+        <!-- SLIDE 3: PILLARS 1 & 2: CANOPIES & LIVING OCEANS (READ) -->
+        <!-- ======================================================== -->
+        <article class="slide-item px-4 sm:px-8 py-4 sm:py-6 bg-[#f8faf8]">
+          <div class="max-w-6xl mx-auto w-full slide-content-landscape my-auto space-y-4">
+            <div>
+              <p class="text-xs font-bold text-emerald-800 uppercase tracking-widest">
+                03 · Canopies & Oceans
+              </p>
+              <h2 class="font-display text-2xl sm:text-4xl font-bold text-slate-900 mt-1">
+                Canopies & Living Oceans
+              </h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <!-- Pillar 1 Card -->
+              <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-3">
+                <div class="rounded-lg overflow-hidden aspect-16/9 bg-slate-100">
+                  <img 
+                    src="/src/assets/images/nature_forest_seedling_hands_1790867376060.jpg" 
+                    alt="Hands holding green tree seedling with roots in rich dark soil" 
+                    class="w-full h-full object-cover"
+                    referrerpolicy="no-referrer"
+                  />
+                </div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between text-xs text-slate-600">
+                    <span class="font-bold text-emerald-800 uppercase tracking-wide">01 · Keystone Canopies</span>
+                    <span class="font-semibold text-slate-700">1 Oak = 534 Species</span>
+                  </div>
+                  <h3 class="font-display text-xl font-bold text-slate-900">Plant Native Trees</h3>
+                  <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+                    Native trees feed caterpillars for birds. Lawns feed almost nothing.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Pillar 2 Card -->
+              <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-3">
+                <div class="rounded-lg overflow-hidden aspect-16/9 bg-slate-100">
+                  <img 
+                    src="/src/assets/images/nature_ocean_coral_reef_1790867363874.jpg" 
+                    alt="Coral reef underwater ecosystem with sea turtle and sunbeams" 
+                    class="w-full h-full object-cover"
+                    referrerpolicy="no-referrer"
+                  />
+                </div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between text-xs text-slate-600">
+                    <span class="font-bold text-emerald-800 uppercase tracking-wide">02 · Watersheds & Reefs</span>
+                    <span class="font-semibold text-slate-700">90% Runoff Filtered</span>
+                  </div>
+                  <h3 class="font-display text-xl font-bold text-slate-900">Filter Runoff</h3>
+                  <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+                    Rain gardens absorb street runoff before it reaches creeks and reefs.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================================================== -->
+        <!-- SLIDE 4: EDUCATIONAL YOUTUBE VIDEO MASTERCLASSES         -->
+        <!-- ======================================================== -->
+        <article class="slide-item px-4 sm:px-8 py-4 sm:py-5 bg-[#f8faf8]">
+          <div class="max-w-6xl mx-auto w-full slide-content-landscape my-auto space-y-3">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+              <div>
+                <p class="text-xs font-bold text-emerald-800 uppercase tracking-widest">
+                  04 · Video Masterclasses
+                </p>
+                <h2 class="font-display text-2xl sm:text-4xl font-bold text-slate-900 mt-1">
+                  Video Masterclasses
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base font-normal">
+                  6 verified documentary lessons.
+                </p>
+              </div>
+
+              <!-- 6 Video Lesson Tabs (100% Verified Embeddable) -->
+              <div class="flex items-center gap-1 overflow-x-auto no-scrollbar pb-0.5 bg-slate-100 p-1 rounded-lg border border-slate-200">
+                <button data-youtube-id="ysa5OBhXz-Q" class="px-3 py-1.5 text-xs font-semibold rounded-md bg-emerald-900 text-white whitespace-nowrap cursor-pointer transition-colors">
+                  1. Wolves
+                </button>
+                <button data-youtube-id="GfO-3Oir-qM" class="px-3 py-1.5 text-xs font-semibold rounded-md bg-white text-slate-700 hover:text-slate-900 whitespace-nowrap cursor-pointer transition-colors shadow-2xs">
+                  2. Our Planet
+                </button>
+                <button data-youtube-id="3BgPFIKCaOQ" class="px-3 py-1.5 text-xs font-semibold rounded-md bg-white text-slate-700 hover:text-slate-900 whitespace-nowrap cursor-pointer transition-colors shadow-2xs">
+                  3. Tiny Forests
+                </button>
+                <button data-youtube-id="V4m9SefyRjg" class="px-3 py-1.5 text-xs font-semibold rounded-md bg-white text-slate-700 hover:text-slate-900 whitespace-nowrap cursor-pointer transition-colors shadow-2xs">
+                  4. Tree Language
+                </button>
+                <button data-youtube-id="HkZDSqyE1do" class="px-3 py-1.5 text-xs font-semibold rounded-md bg-white text-slate-700 hover:text-slate-900 whitespace-nowrap cursor-pointer transition-colors shadow-2xs">
+                  5. Forest Man
+                </button>
+                <button data-youtube-id="r2uAqQXNkr4" class="px-3 py-1.5 text-xs font-semibold rounded-md bg-white text-slate-700 hover:text-slate-900 whitespace-nowrap cursor-pointer transition-colors shadow-2xs">
+                  6. Coral Reefs
+                </button>
+              </div>
+            </div>
+
+            <!-- YouTube Responsive Player Container -->
+            <div class="bg-slate-900 text-white rounded-xl p-3 sm:p-4 shadow-sm border border-slate-800 space-y-3">
+              <div class="relative w-full aspect-16/9 rounded-lg overflow-hidden bg-black shadow-inner">
+                <iframe 
+                  id="youtube-player-frame" 
+                  class="absolute inset-0 w-full h-full border-0" 
+                  src="https://www.youtube.com/embed/ysa5OBhXz-Q?rel=0" 
+                  title="Educational Rewilding Masterclass" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowfullscreen
+                ></iframe>
+              </div>
+
+              <!-- Lesson Title, Takeaway, Watch on YouTube & Citations -->
+              <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="space-y-0.5">
+                  <div class="flex items-center gap-2 text-xs">
+                    <span class="text-emerald-400 font-bold uppercase tracking-wider">Takeaway</span>
+                    <span class="text-slate-500">·</span>
+                    <span id="yt-lesson-title" class="text-slate-300 font-medium">Wolves Change Rivers</span>
+                  </div>
+                  <div id="yt-lesson-takeaway" class="text-sm sm:text-base font-medium text-white leading-relaxed">
+                    Apex predators stabilize riverbanks, restoring water paths and biodiversity.
+                  </div>
+                </div>
+                <div class="shrink-0 flex items-center gap-2 border-t sm:border-t-0 pt-2 sm:pt-0 border-slate-700 flex-wrap">
+                  <a id="yt-direct-link" href="https://www.youtube.com/watch?v=ysa5OBhXz-Q" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-slate-950 hover:bg-black text-slate-200 text-xs sm:text-sm font-semibold border border-slate-700 transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer" title="Watch directly on YouTube">
+                    <span>Watch on YouTube</span>
+                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                  </a>
+
+                  <button data-slide-tab="7" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-white text-xs sm:text-sm font-semibold transition-colors flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+                    <span>Citations →</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================================================== -->
+        <!-- SLIDE 5: PILLARS 3, 4 & 5: POLLINATORS, SOIL & SKIES (READ) -->
+        <!-- ======================================================== -->
+        <article class="slide-item px-4 sm:px-8 py-4 sm:py-6 bg-[#f8faf8]">
+          <div class="max-w-6xl mx-auto w-full slide-content-landscape my-auto space-y-4">
+            <div>
+              <p class="text-xs font-bold text-emerald-800 uppercase tracking-widest">
+                05 · Soil & Pollinators
+              </p>
+              <h2 class="font-display text-2xl sm:text-4xl font-bold text-slate-900 mt-1">
+                Soil, Pollinators & Dark Skies
+              </h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <!-- Pollinators -->
+              <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-3">
+                <div class="rounded-lg overflow-hidden aspect-16/10 bg-slate-100">
+                  <img 
+                    src="/src/assets/images/nature_pollinator_meadow_1790867352122.jpg" 
+                    alt="Wildflower meadow with native bumblebee on coneflower" 
+                    class="w-full h-full object-cover"
+                    referrerpolicy="no-referrer"
+                  />
+                </div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between text-xs text-slate-600">
+                    <span class="font-bold text-emerald-800 uppercase tracking-wide">03 · Pollinators</span>
+                    <span class="font-semibold text-slate-700">70% Nest in Soil</span>
+                  </div>
+                  <h3 class="font-display text-xl font-bold text-slate-900">Fuel Native Bees</h3>
+                  <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+                    Plant blooms spring to frost. Leave bare dirt and leaf mulch for solitary wild bees.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Soil -->
+              <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-3">
+                <div class="p-3.5 rounded-lg bg-slate-50 text-slate-900 border border-slate-200 text-xs sm:text-sm font-semibold">
+                  <span class="font-bold text-emerald-800">Rule:</span> 3 Browns (Leaves) to 1 Green (Scraps)
+                </div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between text-xs text-slate-600">
+                    <span class="font-bold text-emerald-800 uppercase tracking-wide">04 · Living Soil</span>
+                    <span class="font-semibold text-slate-700">30× Rain Absorbed</span>
+                  </div>
+                  <h3 class="font-display text-xl font-bold text-slate-900">Leave the Leaves</h3>
+                  <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+                    Soil holds 3× more carbon than air. Leaf mulch shelters queens all winter.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Dark Skies -->
+              <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-3">
+                <div class="p-3.5 rounded-lg bg-slate-50 text-slate-900 border border-slate-200 text-xs sm:text-sm font-semibold">
+                  <span class="font-bold text-emerald-800">Night:</span> Turn off or shield lights after 10 PM
+                </div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between text-xs text-slate-600">
+                    <span class="font-bold text-emerald-800 uppercase tracking-wide">05 · Dark Skies</span>
+                    <span class="font-semibold text-slate-700">Star Navigation</span>
+                  </div>
+                  <h3 class="font-display text-xl font-bold text-slate-900">Shield Night Lights</h3>
+                  <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+                    Shield night fixtures (&lt;2700K) so migrating songbirds navigate safely.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================================================== -->
+        <!-- SLIDE 6: PERSONAL IMPACT CALCULATOR (INTERACTIVE LAB)   -->
+        <!-- ======================================================== -->
+        <article class="slide-item px-4 sm:px-8 py-4 sm:py-5 bg-[#f8faf8]">
+          <div class="max-w-6xl mx-auto w-full slide-content-landscape my-auto space-y-4">
+            <div>
+              <p class="text-xs font-bold text-emerald-800 uppercase tracking-widest">
+                06 · Impact Calculator
+              </p>
+              <h2 class="font-display text-2xl sm:text-4xl font-bold text-slate-900 mt-1">
+                Annual Household Impact
+              </h2>
+              <p class="text-slate-600 text-sm sm:text-base font-normal">
+                Slide to calculate your annual eco dividends.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-5 items-stretch">
+              <!-- Sliders -->
+              <div class="sm:col-span-6 bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-4">
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="font-semibold text-slate-800">Meatless Days</span>
+                    <span id="val-meat" class="font-mono font-bold text-slate-900 text-sm">3 days/wk</span>
+                  </div>
+                  <input type="range" id="calc-meat-free" min="0" max="7" value="3" class="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-emerald-800" />
+                </div>
+
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="font-semibold text-slate-800">Plastics Refused</span>
+                    <span id="val-plastic" class="font-mono font-bold text-slate-900 text-sm">5 items/wk</span>
+                  </div>
+                  <input type="range" id="calc-plastic" min="0" max="25" value="5" class="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-emerald-800" />
+                </div>
+
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="font-semibold text-slate-800">Native Garden (sq ft)</span>
+                    <span id="val-garden" class="font-mono font-bold text-slate-900 text-sm">25 sq ft</span>
+                  </div>
+                  <input type="range" id="calc-garden" min="0" max="200" step="5" value="25" class="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-emerald-800" />
+                </div>
+
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="font-semibold text-slate-800">Active Transit (mi/wk)</span>
+                    <span id="val-transit" class="font-mono font-bold text-slate-900 text-sm">15 miles/wk</span>
+                  </div>
+                  <input type="range" id="calc-transit" min="0" max="100" step="5" value="15" class="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-emerald-800" />
+                </div>
+              </div>
+
+              <!-- Output Scorecard -->
+              <div class="sm:col-span-6 bg-slate-900 text-white p-5 rounded-xl border border-slate-800 flex flex-col justify-between shadow-2xs space-y-4">
+                <div class="text-xs uppercase tracking-wider text-slate-400 font-bold">Annual Eco Dividends</div>
+
+                <div class="grid grid-cols-2 gap-3 my-auto">
+                  <div class="p-3.5 bg-slate-800/70 rounded-lg border border-slate-700/60">
+                    <div class="text-xs text-slate-400 font-medium">CO₂ Cut</div>
+                    <div class="text-2xl sm:text-3xl font-bold text-white mt-1 tabular-nums">
+                      <span id="out-co2">507</span> <span class="text-xs font-normal text-slate-400">kg</span>
+                    </div>
+                  </div>
+
+                  <div class="p-3.5 bg-slate-800/70 rounded-lg border border-slate-700/60">
+                    <div class="text-xs text-slate-400 font-medium">Water Saved</div>
+                    <div class="text-2xl sm:text-3xl font-bold text-white mt-1 tabular-nums">
+                      <span id="out-water">57,600</span> <span class="text-xs font-normal text-slate-400">gal</span>
+                    </div>
+                  </div>
+
+                  <div class="p-3.5 bg-slate-800/70 rounded-lg border border-slate-700/60">
+                    <div class="text-xs text-slate-400 font-medium">Bees Fed</div>
+                    <div class="text-2xl sm:text-3xl font-bold text-white mt-1 tabular-nums">
+                      <span id="out-pollinators">450</span> <span class="text-xs font-normal text-slate-400">bees</span>
+                    </div>
+                  </div>
+
+                  <div class="p-3.5 bg-slate-800/70 rounded-lg border border-slate-700/60">
+                    <div class="text-xs text-slate-400 font-medium">Plastics Cut</div>
+                    <div class="text-2xl sm:text-3xl font-bold text-white mt-1 tabular-nums">
+                      <span id="out-waste">21</span> <span class="text-xs font-normal text-slate-400">lbs</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================================================== -->
+        <!-- SLIDE 7: 3 PRACTICAL DIY FIELD GUIDES                    -->
+        <!-- ======================================================== -->
+        <article class="slide-item px-4 sm:px-8 py-4 sm:py-5 bg-[#f8faf8]">
+          <div class="max-w-6xl mx-auto w-full slide-content-landscape my-auto space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs font-bold text-emerald-800 uppercase tracking-widest">
+                  07 · Field Action
+                </p>
+                <h2 class="font-display text-2xl sm:text-4xl font-bold text-slate-900 mt-1">
+                  3 Weekend Actions
+                </h2>
+              </div>
+              <span id="guides-completed-badge" class="text-xs font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-md border border-slate-200">
+                0 of 3 Done
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <!-- Guide 1 -->
+              <div class="guide-card bg-white p-5 rounded-xl border border-slate-200 shadow-2xs flex flex-col justify-between space-y-3">
+                <div class="space-y-1.5">
+                  <span class="text-xs font-mono font-semibold text-slate-500">Action 1</span>
+                  <h3 class="font-display text-lg font-bold text-slate-900">Plant a Native Sapling</h3>
+                  <p class="text-slate-700 text-sm leading-relaxed">
+                    Plant an oak or birch to nourish 500+ insect and bird species.
+                  </p>
+                </div>
+                <label class="pt-3 border-t border-slate-100 flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-800">
+                  <input type="checkbox" class="guide-checkbox rounded text-emerald-800 w-4 h-4 cursor-pointer" data-guide-id="plant-tree" />
+                  <span>Mark Done</span>
+                </label>
+              </div>
+
+              <!-- Guide 2 -->
+              <div class="guide-card bg-white p-5 rounded-xl border border-slate-200 shadow-2xs flex flex-col justify-between space-y-3">
+                <div class="space-y-1.5">
+                  <span class="text-xs font-mono font-semibold text-slate-500">Action 2</span>
+                  <h3 class="font-display text-lg font-bold text-slate-900">Dig a Rain Basin</h3>
+                  <p class="text-slate-700 text-sm leading-relaxed">
+                    Direct downspouts into a 6-inch gravel dip to filter stormwater.
+                  </p>
+                </div>
+                <label class="pt-3 border-t border-slate-100 flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-800">
+                  <input type="checkbox" class="guide-checkbox rounded text-emerald-800 w-4 h-4 cursor-pointer" data-guide-id="rain-garden" />
+                  <span>Mark Done</span>
+                </label>
+              </div>
+
+              <!-- Guide 3 -->
+              <div class="guide-card bg-white p-5 rounded-xl border border-slate-200 shadow-2xs flex flex-col justify-between space-y-3">
+                <div class="space-y-1.5">
+                  <span class="text-xs font-mono font-semibold text-slate-500">Action 3</span>
+                  <h3 class="font-display text-lg font-bold text-slate-900">Leave Autumn Leaves</h3>
+                  <p class="text-slate-700 text-sm leading-relaxed">
+                    Rake leaves under trees instead of bagging to protect winter bees.
+                  </p>
+                </div>
+                <label class="pt-3 border-t border-slate-100 flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-800">
+                  <input type="checkbox" class="guide-checkbox rounded text-emerald-800 w-4 h-4 cursor-pointer" data-guide-id="leave-leaves" />
+                  <span>Mark Done</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================================================== -->
+        <!-- SLIDE 8: COMPREHENSIVE REFERENCES & RESEARCH CITATIONS   -->
+        <!-- ======================================================== -->
+        <article class="slide-item px-4 sm:px-8 py-4 sm:py-5 bg-[#f8faf8]">
+          <div class="max-w-6xl mx-auto w-full slide-content-landscape my-auto space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-200 pb-3">
+              <div>
+                <p class="text-xs font-bold text-emerald-800 uppercase tracking-widest">
+                  08 · Research & Citations
+                </p>
+                <h2 class="font-display text-2xl sm:text-4xl font-bold text-slate-900 mt-1">
+                  Literature & Media Sources
+                </h2>
+                <p class="text-slate-600 text-xs sm:text-sm font-normal">
+                  Academic books encoded by Page, Chapter, Verse, Line, and Part.
+                </p>
+              </div>
+
+              <!-- Filter Toolbar & Copy Citation Action -->
+              <div class="flex items-center gap-2 flex-wrap shrink-0">
+                <div class="flex items-center gap-1 bg-slate-100 rounded-lg p-1 border border-slate-200">
+                  <button data-ref-filter="all" class="ref-filter-btn px-2.5 py-1 text-xs font-semibold rounded-md bg-white text-slate-900 shadow-2xs cursor-pointer transition-colors">
+                    All (10)
+                  </button>
+                  <button data-ref-filter="book" class="ref-filter-btn px-2.5 py-1 text-xs font-medium rounded-md bg-transparent text-slate-600 hover:text-slate-900 cursor-pointer transition-colors">
+                    Books (4)
+                  </button>
+                  <button data-ref-filter="video" class="ref-filter-btn px-2.5 py-1 text-xs font-medium rounded-md bg-transparent text-slate-600 hover:text-slate-900 cursor-pointer transition-colors">
+                    Videos (6)
+                  </button>
+                </div>
+
+                <button id="copy-citations-btn" class="px-3 py-1.5 text-xs font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-2xs">
+                  <svg class="w-3.5 h-3.5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                  <span id="copy-citations-text">Copy Citations</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Citations Grid & Knowledge Check -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+              <!-- Left / Main: The Bibliographic Citations (Clean, Unboxed Metadata) -->
+              <div class="lg:col-span-8 space-y-2.5 max-h-[58vh] overflow-y-auto pr-1" id="references-container">
+
+                <!-- 1. Monbiot - Feral (Book) -->
+                <div class="ref-entry bg-white p-3.5 rounded-lg border border-slate-200 space-y-1.5 transition-colors hover:border-slate-300" data-ref-type="book">
+                  <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span>Book 1 · Research Citation</span>
+                    <span>2014</span>
+                  </div>
+                  <div class="text-sm font-bold text-slate-900 leading-snug">
+                    <span>Monbiot, George.</span> 
+                    <span class="italic font-display text-emerald-950">Feral: Rewilding the Land, the Sea, and Human Life,</span>
+                    <span class="font-normal text-slate-700">p. 84, chap. 5, v. 12, ll. 14–38, pt. II.</span>
+                  </div>
+                  <div class="text-xs text-slate-600">
+                    Penguin Books · ISBN: 978-0141975580
+                  </div>
+                  <div class="pt-1 border-t border-slate-100 text-xs">
+                    <a href="https://www.monbiot.com/books/feral/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-slate-900 hover:underline">
+                      https://www.monbiot.com/books/feral/
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 2. Sustainable Man - How Wolves Change Rivers (Video) -->
+                <div class="ref-entry bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 transition-colors hover:border-slate-300" data-ref-type="video">
+                  <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span>Video 1 · YouTube</span>
+                    <span>2014 · 4m 33s</span>
+                  </div>
+                  <div class="text-sm font-bold text-slate-900">
+                    <span>Sustainable Man & BBC Earth.</span> 
+                    <span class="font-display text-emerald-950">"How Wolves Change Rivers."</span>
+                  </div>
+                  <div class="text-xs text-slate-600">
+                    Narration by George Monbiot; Yellowstone trophic cascade case study.
+                  </div>
+                  <div class="pt-1 border-t border-slate-100 text-xs">
+                    <a href="https://www.youtube.com/watch?v=ysa5OBhXz-Q" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-slate-900 hover:underline">
+                      https://www.youtube.com/watch?v=ysa5OBhXz-Q
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 3. David Attenborough - Our Planet: One Planet (Video) -->
+                <div class="ref-entry bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 transition-colors hover:border-slate-300" data-ref-type="video">
+                  <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span>Video 2 · Netflix & WWF</span>
+                    <span>2019 · 49m</span>
+                  </div>
+                  <div class="text-sm font-bold text-slate-900">
+                    <span>Attenborough, David, Netflix & WWF.</span> 
+                    <span class="font-display text-emerald-950">"Our Planet: One Planet."</span>
+                  </div>
+                  <div class="text-xs text-slate-600">
+                    Silverback Films documentary on global biomes and habitat connectivity.
+                  </div>
+                  <div class="pt-1 border-t border-slate-100 text-xs">
+                    <a href="https://www.youtube.com/watch?v=GfO-3Oir-qM" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-slate-900 hover:underline">
+                      https://www.youtube.com/watch?v=GfO-3Oir-qM
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 4. Simard - Finding the Mother Tree (Book) -->
+                <div class="ref-entry bg-white p-3.5 rounded-lg border border-slate-200 space-y-1.5 transition-colors hover:border-slate-300" data-ref-type="book">
+                  <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span>Book 2 · Research Citation</span>
+                    <span>2021</span>
+                  </div>
+                  <div class="text-sm font-bold text-slate-900 leading-snug">
+                    <span>Simard, Suzanne.</span> 
+                    <span class="italic font-display text-emerald-950">Finding the Mother Tree: Forest Wisdom,</span>
+                    <span class="font-normal text-slate-700">p. 165, chap. 8, v. 7, ll. 9–31, pt. III.</span>
+                  </div>
+                  <div class="text-xs text-slate-600">
+                    Alfred A. Knopf · ISBN: 978-0525656098
+                  </div>
+                  <div class="pt-1 border-t border-slate-100 text-xs">
+                    <a href="https://suzannesimard.com/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-slate-900 hover:underline">
+                      https://suzannesimard.com/
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 5. Sharma - How to Grow a Tiny Forest Anywhere (Video) -->
+                <div class="ref-entry bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 transition-colors hover:border-slate-300" data-ref-type="video">
+                  <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span>Video 3 · TED</span>
+                    <span>2014 · 9m 14s</span>
+                  </div>
+                  <div class="text-sm font-bold text-slate-900">
+                    <span>Sharma, Shubhendu.</span> 
+                    <span class="font-display text-emerald-950">"How to Grow a Tiny Forest Anywhere."</span>
+                  </div>
+                  <div class="text-xs text-slate-600">
+                    Miyawaki afforestation method in urban backyards.
+                  </div>
+                  <div class="pt-1 border-t border-slate-100 text-xs">
+                    <a href="https://www.youtube.com/watch?v=3BgPFIKCaOQ" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-slate-900 hover:underline">
+                      https://www.youtube.com/watch?v=3BgPFIKCaOQ
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 6. TED-Ed - The Secret Language of Trees (Video) -->
+                <div class="ref-entry bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 transition-colors hover:border-slate-300" data-ref-type="video">
+                  <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span>Video 4 · TED-Ed</span>
+                    <span>2020 · 5m 09s</span>
+                  </div>
+                  <div class="text-sm font-bold text-slate-900">
+                    <span>TED-Ed, Defrenne, C., & Simard, S.</span> 
+                    <span class="font-display text-emerald-950">"The Secret Language of Trees."</span>
+                  </div>
+                  <div class="text-xs text-slate-600">
+                    Mycorrhizal network nutrient and defense signal exchange.
+                  </div>
+                  <div class="pt-1 border-t border-slate-100 text-xs">
+                    <a href="https://www.youtube.com/watch?v=V4m9SefyRjg" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-slate-900 hover:underline">
+                      https://www.youtube.com/watch?v=V4m9SefyRjg
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 7. McMaster & Payeng - Forest Man (Video) -->
+                <div class="ref-entry bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 transition-colors hover:border-slate-300" data-ref-type="video">
+                  <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span>Video 5 · Cannes Winner</span>
+                    <span>2013 · 16m 27s</span>
+                  </div>
+                  <div class="text-sm font-bold text-slate-900">
+                    <span>McMaster, W. D., & Payeng, J.</span> 
+                    <span class="font-display text-emerald-950">"Forest Man: The Story of Jadav Payeng."</span>
+                  </div>
+                  <div class="text-xs text-slate-600">
+                    Single-handed reforestation of 1,360 acres in Majuli Island, India.
+                  </div>
+                  <div class="pt-1 border-t border-slate-100 text-xs">
+                    <a href="https://www.youtube.com/watch?v=HkZDSqyE1do" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-slate-900 hover:underline">
+                      https://www.youtube.com/watch?v=HkZDSqyE1do
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 8. BBC Earth - Restoring Reef Ecosystem in 5 Steps (Video) -->
+                <div class="ref-entry bg-white p-3.5 rounded-lg border border-slate-200 space-y-1 transition-colors hover:border-slate-300" data-ref-type="video">
+                  <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span>Video 6 · BBC Earth</span>
+                    <span>2020 · 8m 10s</span>
+                  </div>
+                  <div class="text-sm font-bold text-slate-900">
+                    <span>BBC Earth & Coral Restoration.</span> 
+                    <span class="font-display text-emerald-950">"Restoring Reef Ecosystem in 5 Steps."</span>
+                  </div>
+                  <div class="text-xs text-slate-600">
+                    Nursery fragmentation and micro-planting on marine reefs.
+                  </div>
+                  <div class="pt-1 border-t border-slate-100 text-xs">
+                    <a href="https://www.youtube.com/watch?v=r2uAqQXNkr4" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-slate-900 hover:underline">
+                      https://www.youtube.com/watch?v=r2uAqQXNkr4
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 9. Tallamy - Nature's Best Hope (Book) -->
+                <div class="ref-entry bg-white p-3.5 rounded-lg border border-slate-200 space-y-1.5 transition-colors hover:border-slate-300" data-ref-type="book">
+                  <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span>Book 3 · Research Citation</span>
+                    <span>2020</span>
+                  </div>
+                  <div class="text-sm font-bold text-slate-900 leading-snug">
+                    <span>Tallamy, Douglas W.</span> 
+                    <span class="italic font-display text-emerald-950">Nature's Best Hope: Conservation in Your Yard,</span>
+                    <span class="font-normal text-slate-700">p. 114, chap. 4, v. 18, ll. 4–22, pt. I.</span>
+                  </div>
+                  <div class="text-xs text-slate-600">
+                    Timber Press · ISBN: 978-1604699005
+                  </div>
+                  <div class="pt-1 border-t border-slate-100 text-xs">
+                    <a href="https://homegrownnationalpark.org/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-slate-900 hover:underline">
+                      https://homegrownnationalpark.org/
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 10. Miyawaki & Box - The Healing Power of Forests (Book) -->
+                <div class="ref-entry bg-white p-3.5 rounded-lg border border-slate-200 space-y-1.5 transition-colors hover:border-slate-300" data-ref-type="book">
+                  <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+                    <span>Book 4 · Research Citation</span>
+                    <span>2006</span>
+                  </div>
+                  <div class="text-sm font-bold text-slate-900 leading-snug">
+                    <span>Miyawaki, Akira & Box, Elgene O.</span> 
+                    <span class="italic font-display text-emerald-950">The Healing Power of Forests: Restoring Earth's Balance,</span>
+                    <span class="font-normal text-slate-700">p. 93, chap. 3, v. 9, ll. 11–29, pt. IV.</span>
+                  </div>
+                  <div class="text-xs text-slate-600">
+                    Kosei Publishing · ISBN: 978-4333020737
+                  </div>
+                  <div class="pt-1 border-t border-slate-100 text-xs">
+                    <a href="https://afforestt.com/" target="_blank" rel="noopener noreferrer" class="text-slate-600 hover:text-slate-900 hover:underline">
+                      https://afforestt.com/
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Right: Practical Ecological Knowledge Check -->
+              <div class="lg:col-span-4 bg-white p-5 rounded-xl border border-slate-200 shadow-2xs space-y-3">
+                <div class="border-b border-slate-100 pb-2 flex items-center justify-between">
+                  <h3 class="font-display text-base font-bold text-slate-900">Knowledge Check</h3>
+                  <span class="text-xs text-slate-500">3 Questions</span>
+                </div>
+                
+                <form id="eco-quiz-form" class="space-y-3">
+                  <div id="block-q1" class="p-3 rounded-lg bg-slate-50 border border-slate-200/80 space-y-1">
+                    <div class="font-semibold text-slate-900 text-xs sm:text-sm">1. Which tree feeds over 500 caterpillar species?</div>
+                    <div class="space-y-1 text-xs text-slate-700">
+                      <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="b" class="w-4 h-4 text-emerald-800" /> <span>Native White Oak (Quercus)</span></label>
+                      <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q1" value="a" class="w-4 h-4 text-emerald-800" /> <span>Bradford Pear</span></label>
+                    </div>
+                  </div>
+
+                  <div id="block-q2" class="p-3 rounded-lg bg-slate-50 border border-slate-200/80 space-y-1">
+                    <div class="font-semibold text-slate-900 text-xs sm:text-sm">2. What is best for fallen autumn leaves?</div>
+                    <div class="space-y-1 text-xs text-slate-700">
+                      <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="c" class="w-4 h-4 text-emerald-800" /> <span>Leave under trees for queen bees</span></label>
+                      <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q2" value="a" class="w-4 h-4 text-emerald-800" /> <span>Bag in plastic for landfill</span></label>
+                    </div>
+                  </div>
+
+                  <div id="block-q3" class="p-3 rounded-lg bg-slate-50 border border-slate-200/80 space-y-1">
+                    <div class="font-semibold text-slate-900 text-xs sm:text-sm">3. What filters street runoff before rivers?</div>
+                    <div class="space-y-1 text-xs text-slate-700">
+                      <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="c" class="w-4 h-4 text-emerald-800" /> <span>Vegetated rain gardens</span></label>
+                      <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="q3" value="a" class="w-4 h-4 text-emerald-800" /> <span>Concrete roadside curbs</span></label>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="w-full py-2 text-xs sm:text-sm font-semibold text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer">
+                    Calculate Score
+                  </button>
+                </form>
+
+                <div id="quiz-result" class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 hidden space-y-1">
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm font-bold text-emerald-950" id="quiz-archetype-title"></span>
+                    <span id="quiz-score-text" class="text-sm font-bold text-emerald-950 tabular-nums"></span>
+                  </div>
+                  <p id="quiz-archetype-desc" class="text-slate-700 text-xs leading-relaxed"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- MINIMAL BOTTOM SLIDE CONTROLLER BAR -->
+    <div id="bottom-slide-dock" class="relative z-40 bg-white border-t border-slate-200/90 px-4 sm:px-6 py-2.5 shrink-0">
+      <div class="max-w-6xl mx-auto flex items-center justify-between gap-3">
+        <!-- Prev Button -->
+        <button data-slide-prev class="px-3.5 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors flex items-center gap-1 cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+          <span>Previous</span>
+        </button>
+
+        <!-- Center Indicator -->
+        <div class="flex items-center gap-2 text-center text-xs text-slate-600 truncate px-1">
+          <!-- Mobile view indicator & Landscape toggle on phone dock -->
+          <div class="flex sm:hidden items-center gap-2 font-semibold text-slate-800">
+            <span id="phone-slide-counter" class="font-mono text-xs font-bold text-slate-700">1 / 8</span>
+            <button id="phone-landscape-btn" class="px-2 py-1 rounded bg-slate-100 text-slate-700 text-[11px] font-semibold border border-slate-200 cursor-pointer">
+              <span id="phone-mode-label">Landscape</span>
+            </button>
+          </div>
+
+          <!-- Desktop view indicator -->
+          <div class="hidden sm:flex items-center gap-2 truncate">
+            <span class="text-slate-400 text-xs">Keyboard: [Q] Previous · [E] Next · or Swipe</span>
+            <span aria-hidden="true" class="text-slate-300">·</span>
+            <span id="slide-title-display" class="font-semibold text-slate-800 truncate max-w-xs md:max-w-md">01. Rewilding Ethos</span>
+          </div>
+        </div>
+
+        <!-- Next Button -->
+        <button data-slide-next class="px-3.5 py-1.5 text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition-colors flex items-center gap-1 cursor-pointer">
+          <span>Next</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
+    </div>
+  </div> <!-- Close #app-stage -->
+
+    <!-- Lightbox Modal for Sample Image -->
+    <div id="sample-lightbox-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+      <div class="relative max-w-4xl w-full bg-emerald-950 rounded-2xl overflow-hidden shadow-2xl border border-emerald-800/80">
+        <button id="close-sample-lightbox-btn" class="absolute top-3 right-3 z-10 p-2 rounded-full bg-black/60 hover:bg-black text-white transition-colors cursor-pointer" aria-label="Close">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <div class="aspect-16/9 w-full bg-black flex items-center justify-center">
+          <img 
+            src="/src/assets/images/nature_sample_quote_1790926845661.jpg" 
+            alt="Sample: Love the Nature and Be One with the Nature, Let's Respect the Nature" 
+            class="w-full h-full object-contain"
+            referrerpolicy="no-referrer"
+          />
+        </div>
+        <div class="p-3.5 bg-emerald-950 border-t border-emerald-800/80 flex items-center justify-between text-white text-xs">
+          <span class="font-display italic text-emerald-200 text-sm">“Love the nature and be one with the nature, let's respect the nature”</span>
+          <span class="text-[11px] font-mono text-emerald-400">Sample Visual Asset</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vanilla JavaScript Module Entry -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,286 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-color: #f8faf8;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  body {
+    background-color: #f8faf8;
+    color: #0f172a;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+}
+
+:root {
+  --slide-avail-height: calc(100vh - 105px);
+  --slide-max-width: 1280px;
+  --slide-aspect-ratio: 1.77;
+  --portrait-slide-w: calc(100vw - 16px);
+  --portrait-slide-h: 520px;
+}
+
+/* Page Switching Animation */
+@keyframes slideCardEntrance {
+  0% {
+    opacity: 0.7;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Minimalist Clean Progress Line */
+.slide-progress-bar {
+  height: 2px;
+  background-color: #047857;
+  transition: width 0.3s ease;
+}
+
+/* ========================================================================== */
+/* APP STAGE: Robust Presentation Deck for Desktop & Mobile Phones            */
+/* ========================================================================== */
+.app-stage {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: #f8faf8;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Slide Deck Viewport */
+.slides-viewport {
+  flex: 1 1 auto;
+  width: 100%;
+  height: var(--slide-avail-height, calc(100vh - 105px));
+  overflow: hidden;
+  position: relative;
+  background-color: #f8faf8;
+  display: flex;
+}
+
+.slides-track {
+  display: flex;
+  width: 800%;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  background-color: #f8faf8;
+}
+
+/* Individual Slide Card */
+.slide-item {
+  width: 12.5%;
+  height: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  background-color: #f8faf8;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0.75rem 1rem 1.25rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .slide-item {
+    padding: 1.25rem 2rem 1.75rem 2rem;
+  }
+}
+
+/* Landscape Slide Content Widescreen Container */
+.slide-content-landscape {
+  width: 100%;
+  max-width: var(--slide-max-width, 1280px);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.2s ease;
+}
+
+/* Switching Animation on the active slide */
+.slide-item.active-slide .slide-content-landscape {
+  animation: slideCardEntrance 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ========================================================================== */
+/* SCREEN DETECTION ALGORITHM: LANDSCAPE SLIDES INSIDE PORTRAIT               */
+/* ========================================================================== */
+
+/* Mode 1: Landscape in Portrait (16:10 / 16:9 Widescreen Deck inside Portrait) */
+.app-stage.is-portrait.mode-landscape-in-portrait .slides-viewport {
+  background: #f1f5f1;
+}
+
+.app-stage.is-portrait.mode-landscape-in-portrait .slide-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 0.5rem;
+  overflow: hidden;
+}
+
+.app-stage.is-portrait.mode-landscape-in-portrait .slide-content-landscape {
+  width: var(--portrait-slide-w, calc(100vw - 16px));
+  max-width: 680px;
+  height: var(--portrait-slide-h, 520px);
+  max-height: calc(100% - 8px);
+  margin: auto;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 1rem 1.15rem;
+  position: relative;
+}
+
+/* Mode 2: Rotated 90° Landscape Mode (Virtual Fullscreen Landscape) */
+.app-stage.is-portrait.mode-landscape-rotate-90 header {
+  display: none !important;
+}
+
+.app-stage.is-portrait.mode-landscape-rotate-90 #bottom-slide-dock {
+  display: none !important;
+}
+
+/* Rotated Landscape Overlay Floating HUD */
+#rotated-landscape-controls {
+  display: none;
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 60;
+  pointer-events: auto;
+}
+
+.app-stage.is-portrait.mode-landscape-rotate-90 #rotated-landscape-controls {
+  display: flex !important;
+}
+
+.app-stage.is-portrait.mode-landscape-rotate-90 .slides-viewport {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: var(--rotated-viewport-w, 100vh);
+  height: var(--rotated-viewport-h, 100vw);
+  transform: translate(-50%, -50%) rotate(90deg);
+  transform-origin: center center;
+  overflow: hidden;
+  background-color: #f8faf8;
+  z-index: 45;
+}
+
+.app-stage.is-portrait.mode-landscape-rotate-90 .slide-item {
+  width: 12.5%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.app-stage.is-portrait.mode-landscape-rotate-90 .slide-content-landscape {
+  width: 100%;
+  max-width: 1240px;
+  margin: auto;
+}
+
+/* Mode 3: Expanded Portrait Fit (Vertical full flow) */
+.app-stage.is-portrait.mode-portrait-expanded .slide-item {
+  overflow-y: auto;
+  padding: 0.75rem 1rem;
+}
+.app-stage.is-portrait.mode-portrait-expanded .slide-content-landscape {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Remove clumsy side buttons to keep UI clean and simple */
+.mobile-edge-btn {
+  display: none !important;
+}
+
+@media (min-width: 1024px) {
+  .mobile-edge-btn {
+    display: none;
+  }
+}
+
+.mobile-edge-btn:active {
+  transform: translateY(-50%) scale(0.92);
+  background: #064e3b;
+  color: #ffffff;
+}
+
+.mobile-edge-prev {
+  left: 0;
+  border-top-right-radius: 14px;
+  border-bottom-right-radius: 14px;
+  border-left: none;
+}
+
+.mobile-edge-next {
+  right: 0;
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+  border-right: none;
+}
+
+/* Phone bottom dock safe area padding */
+.phone-bottom-dock {
+  padding-bottom: max(6px, env(safe-area-inset-bottom));
+}
+
+/* Hide scrollbar on tabs for clean mobile appearance */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eef2ed;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5cb;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a395;
+}
